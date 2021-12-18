@@ -1,27 +1,25 @@
 
 
-from zeroconf import ZeroconfServiceTypes
+while True:
+    if not wleds: 
+        time.sleep(1)
+        continue
 
-# print(ZeroconfServiceTypes.find())
+    for w in wleds:
+        w.refresh()
+    
+    break
 
-from zeroconf import ServiceBrowser, Zeroconf
+zeroconf.close()
 
-
-class MyListener:
-
-    def remove_service(self, zeroconf, type, name):
-        print("Service %s removed" % (name,))
-
-    def add_service(self, zeroconf, type, name):
-        info = zeroconf.get_service_info(type, name)
-        print("Service %s added, service info: %s" % (name, info))
-        print(f"{info.parsed_addresses()[0]}")
-
-
-zeroconf = Zeroconf()
-listener = MyListener()
-browser = ServiceBrowser(zeroconf, "_http._tcp.local.", listener)
-try:
-    input("Press enter to exit...\n\n")
-finally:
-    zeroconf.close()
+tstring = LedString.strings['WLED-Test']
+print(tstring.effects())
+while True:
+    tstring.update()
+    time.sleep(0.2)
+# headers ={'content-type':'application/json'}
+# for i in range(25):
+#     for j in range(25):
+#         result = requests.post(f"http://{tstring.addr}/json/state", data=json.dumps(
+#             {"seg":[{"fx": j+1, "pal": i+1}]}), headers=headers)
+#         time.sleep(3)

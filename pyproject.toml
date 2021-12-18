@@ -5,9 +5,13 @@ description = ""
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 requests = "^2.26.0"
-zeroconf = "^0.36.13"
+loguru = "^0.5.3"
+Flask = "^2.0.2"
+eventlet = "^0.32.0"
+Flask-SocketIO = "4.3.2"
+SQLAlchemy = "^1.4.27"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
