@@ -9,9 +9,10 @@ python = "^3.8"
 requests = "^2.26.0"
 loguru = "^0.5.3"
 Flask = "^2.0.2"
-eventlet = "^0.32.0"
+eventlet = "0.33.1"
 Flask-SocketIO = "4.3.2"
 SQLAlchemy = "^1.4.27"
+more-itertools = "9.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
