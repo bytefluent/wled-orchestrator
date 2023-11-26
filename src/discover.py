@@ -13,12 +13,15 @@ class WLEDFinder:
         self.found = {}
 
     def _execute(self, command):
-        result = subprocess.run(command.split(" "), stdout=subprocess.PIPE, text=True)
+        try:
+            result = subprocess.run(command.split(" "), stdout=subprocess.PIPE, timeout=3, text=True)
+        except subprocess.TimeoutExpired as toe:
+            return toe.stdout.decode()
         return result.stdout
 
     def _service_thread(self):
         while True:
-            lines = [_ for _ in self._execute("avahi-browse -atp").split() if '_wled._tcp' in _]
+            lines = [_ for _ in self._execute("avahi-browse -ap").split() if '_wled._tcp' in _]
             for line in lines:
                 parts = line.split(';')
                 # logger.debug(parts)
