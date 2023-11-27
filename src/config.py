@@ -1,6 +1,5 @@
 import os
 
-
 class Config(object):
     # If not set fall back to production for safety
     FLASK_ENV =  os.getenv('FLASK_ENV', 'production')
@@ -11,6 +10,8 @@ class Config(object):
     APP_DIR = os.path.dirname(__file__)
     ROOT_DIR = os.path.dirname(APP_DIR)
     DIST_DIR = os.path.join(ROOT_DIR, 'front-end-dist')
+
+    DISCOVERED_LED_FILE = '/tmp/discovered_leds.json'
 
     @classmethod
     def is_production(cls):

@@ -12,6 +12,8 @@ eventlet.monkey_patch()
 from flask import Flask, current_app, send_file, jsonify, request, session
 from flask_socketio import SocketIO, emit
 
+from config import Config
+
 from loguru import logger
 
 from db import initialize, PatternTable, SettingsTable, ScheduleTable, LEDsGroupTable
@@ -35,8 +37,6 @@ server.logger.info('>>> {}'.format(server.config['FLASK_ENV']))
 socketio = SocketIO(server, cors_allowed_origins='*', async_mode="eventlet")
 
 from led_string import LedString, Schedule
-from discover import WLEDFinder
-finder = WLEDFinder.instance()
 
 leds = {}
 schedules = []
@@ -57,12 +57,17 @@ def serve_static(file):
     entry = os.path.join(current_app.config['ROOT_DIR'], 'files', file)
     return send_file(entry)
 
+def discovered_leds():
+    try:
+        return json.load(open(os.path.join(Config.DISCOVERED_LED_FILE)))
+    except:
+        return {}
 
 @logger.catch
 def _thread_step():
     global schedules
     global schedule_mode_on
-    found = list(finder.found.items())
+    found = list(discovered_leds().items())
     for name, addr in found:
         # Check to see if the LEDs on the network are being managed yet
         if name not in leds:

@@ -13,6 +13,7 @@ eventlet = "0.33.1"
 Flask-SocketIO = "4.3.2"
 SQLAlchemy = "^1.4.27"
 more-itertools = "9.0.0"
+zeroconf = "^0.127.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
